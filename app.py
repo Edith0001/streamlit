@@ -78,7 +78,7 @@ rolling_df = pd.DataFrame({
     "예측 변화율 (%)": predicted_returns
 })
 
-# ✅ 날짜 선택 후 예측 수치 출력 (변화율 생략)
+# ✅ 날짜 선택 후 예측 수치 출력
 st.markdown("### 📅 날짜 선택하여 예측 환율 확인")
 selected_date = st.date_input("날짜를 선택하세요 (2025-03-01 ~ 2025-05-31)", value=date(2025, 3, 1),
                               min_value=date(2025, 3, 1), max_value=date(2025, 5, 31))
@@ -93,7 +93,7 @@ else:
 # 🔹 그래프 전 여백 추가
 st.markdown("<br>", unsafe_allow_html=True)
 
-# ✅ 그래프 시각화 (제목 제거)
+# ✅ 그래프 시각화
 st.markdown("### 🔮 2025년 3~5월 예측 환율 한눈에 보기")
 fig, ax = plt.subplots(figsize=(10, 4))
 ax.plot(rolling_df["DATE"], rolling_df["예측 환율"], label="예측 환율", marker='o')
@@ -106,6 +106,6 @@ ax.grid(True, linestyle='--', alpha=0.5)
 st.pyplot(fig)
 plt.close(fig)
 
-# ✅ 예측 수치 표 출력
-with st.expander("📄 예측 수치 보기"):
-    st.dataframe(rolling_df.set_index("DATE"), use_container_width=True)
+# ✅ 예측 수치 표 바로 출력 (Expander 제거)
+st.markdown("### 📊 예측 수치 테이블")
+st.dataframe(rolling_df.set_index("DATE"), use_container_width=True)
