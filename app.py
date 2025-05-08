@@ -9,7 +9,7 @@ from model_utils import create_sequence_from_date
 model = load_model("model.h5", compile=False)
 scaler_y = joblib.load("scaler_y.pkl")
 
-st.title("💱 AI가 알려주는 원/달러 환율 예측")
+st.title("💸 내일의 환율")
 st.markdown("60일치 데이터를 기반으로 선택한 날짜의 환율을 예측합니다.")
 
 input_date = st.date_input("📅 예측하고 싶은 날짜를 선택하세요", datetime(2025, 3, 31))
