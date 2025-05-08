@@ -75,7 +75,7 @@ rolling_df = pd.DataFrame({
     "예측 변화율 (%)": predicted_returns
 })
 
-# ✅ 날짜 선택 후 예측 수치 출력
+# ✅ 날짜 선택 후 예측 수치 출력 (변화율 제외)
 st.markdown("### 📅 날짜 선택하여 예측 환율 확인")
 selected_date = st.date_input("날짜를 선택하세요 (2025-03-01 ~ 2025-05-31)", value=date(2025, 3, 1),
                               min_value=date(2025, 3, 1), max_value=date(2025, 5, 31))
@@ -83,14 +83,12 @@ selected_date = st.date_input("날짜를 선택하세요 (2025-03-01 ~ 2025-05-3
 if pd.to_datetime(selected_date) in rolling_df["DATE"].values:
     row = rolling_df[rolling_df["DATE"] == pd.to_datetime(selected_date)].iloc[0]
     rate = row["예측 환율"]
-    change = row["예측 변화율 (%)"]
-    st.success(f"📅 **{selected_date.strftime('%Y-%m-%d')}** 의 예측 환율은 **{rate:,.2f}원**입니다.\n\n"
-               f"📉 전일 대비 변화율: **{change:+.2f}%**")
+    st.success(f"📅 **{selected_date.strftime('%Y-%m-%d')}** 의 예측 환율은 **{rate:,.2f}원**입니다.")
 else:
     st.warning("선택한 날짜에 대한 예측값이 없습니다.")
 
-# ✅ 그래프 시각화
-st.markdown("### 🔮 2025년 3~5월 환율 예측 그래프")
+# ✅ 그래프 시각화 (제목 제거)
+st.markdown("### 🔮 2025년 3~5월 예측 환율 한눈에 보기")
 fig, ax = plt.subplots(figsize=(10, 4))
 ax.plot(rolling_df["DATE"], rolling_df["예측 환율"], label="예측 환율", marker='o')
 ax.set_xlabel("DATE")
@@ -99,7 +97,6 @@ ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y-%m-%d"))
 ax.xaxis.set_major_locator(mdates.WeekdayLocator(interval=1))
 ax.tick_params(axis='x', labelrotation=45, labelsize=8)
 ax.grid(True, linestyle='--', alpha=0.5)
-ax.set_title("2025년 3~5월 환율 예측 (Rolling Prediction)")
 st.pyplot(fig)
 plt.close(fig)
 
