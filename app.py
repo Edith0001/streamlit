@@ -105,7 +105,3 @@ ax.tick_params(axis='x', labelrotation=45, labelsize=8)
 ax.grid(True, linestyle='--', alpha=0.5)
 st.pyplot(fig)
 plt.close(fig)
-
-# ✅ 예측 수치 표 바로 출력 (Expander 제거)
-st.markdown("### 📊 예측 수치 테이블")
-st.dataframe(rolling_df.set_index("DATE"), use_container_width=True)
