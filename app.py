@@ -94,7 +94,7 @@ else:
 st.markdown("<br>", unsafe_allow_html=True)
 
 # ✅ 그래프 시각화
-st.markdown("### 🔮 2025년 3~5월 예측 환율 한눈에 보기")
+st.markdown("### 📈 2025년 3~5월 예측 환율 한눈에 보기")
 fig, ax = plt.subplots(figsize=(10, 4))
 ax.plot(rolling_df["DATE"], rolling_df["예측 환율"], label="예측 환율", marker='o')
 ax.set_xlabel("DATE")
