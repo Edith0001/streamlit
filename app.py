@@ -11,7 +11,10 @@ from sklearn.preprocessing import StandardScaler
 # ✅ 페이지 설정
 st.set_page_config(page_title="내일의 환율", page_icon="💸")
 st.title("💸 내일의 환율")
-st.markdown("60일치 데이터를 기반으로 환율을 예측합니다.")
+
+# 🔹 설명 문구 (작은 글씨, 여백 포함)
+st.markdown("<p style='font-size: 0.9rem;'>60일치 데이터를 기반으로 환율을 예측합니다.</p>", unsafe_allow_html=True)
+st.markdown("<br>", unsafe_allow_html=True)
 
 # ✅ 모델 및 스케일러 불러오기
 model = load_model("model.h5", compile=False)
@@ -75,7 +78,7 @@ rolling_df = pd.DataFrame({
     "예측 변화율 (%)": predicted_returns
 })
 
-# ✅ 날짜 선택 후 예측 수치 출력 (변화율 제외)
+# ✅ 날짜 선택 후 예측 수치 출력 (변화율 생략)
 st.markdown("### 📅 날짜 선택하여 예측 환율 확인")
 selected_date = st.date_input("날짜를 선택하세요 (2025-03-01 ~ 2025-05-31)", value=date(2025, 3, 1),
                               min_value=date(2025, 3, 1), max_value=date(2025, 5, 31))
@@ -86,6 +89,9 @@ if pd.to_datetime(selected_date) in rolling_df["DATE"].values:
     st.success(f"📅 **{selected_date.strftime('%Y-%m-%d')}** 의 예측 환율은 **{rate:,.2f}원**입니다.")
 else:
     st.warning("선택한 날짜에 대한 예측값이 없습니다.")
+
+# 🔹 그래프 전 여백 추가
+st.markdown("<br>", unsafe_allow_html=True)
 
 # ✅ 그래프 시각화 (제목 제거)
 st.markdown("### 🔮 2025년 3~5월 예측 환율 한눈에 보기")
