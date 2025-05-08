@@ -10,15 +10,14 @@ from model_utils import create_sequence_from_date
 model = load_model("model.h5", compile=False)
 scaler_y = joblib.load("scaler_y.pkl")
 
-# 앱 제목 및 설명
+# 앱 설정
 st.set_page_config(page_title="내일의 환율", page_icon="💸")
 st.title("💸 내일의 환율")
 st.markdown("60일치 데이터를 기반으로 선택한 날짜의 환율을 예측합니다.")
 
-# 날짜 선택
+# 날짜 선택 (달력형 UI)
 min_date = date(2025, 1, 1)
 max_date = date(2025, 4, 30)
-
 input_date = st.date_input(
     "📅 예측하고 싶은 날짜를 선택하세요",
     value=date(2025, 3, 31),
@@ -39,7 +38,6 @@ if st.button("예측하기"):
 
     # 최근 30일 예측 추세 그래프
     st.subheader("📉 최근 30일간 환율 예측 추세")
-
     try:
         preds = []
         dates = pd.date_range(end=input_date, periods=30)
@@ -62,6 +60,7 @@ if st.button("예측하기"):
             ax.set_xlabel("날짜")
             ax.grid(True)
             st.pyplot(fig)
+            plt.close(fig)  # ✅ Streamlit에서 렌더링 충돌 방지
         else:
             st.info("최근 30일 예측 가능한 날짜가 부족합니다.")
     except:
